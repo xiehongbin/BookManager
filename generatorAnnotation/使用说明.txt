@@ -1,0 +1,5 @@
+作用：
+	使用mybatis自动生成的实体类有注释
+
+使用:
+	将此包替换掉org\mybatis\generator\mybatis-generator-core中原有的jar
