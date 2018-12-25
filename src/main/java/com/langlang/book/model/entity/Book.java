@@ -3,9 +3,11 @@ package com.langlang.book.model.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
- * @author xiehongbin
- * @Date 2018/12/20
+ * @Author: xiehongbin
+ * @Date: 2018/12/25
+ * @Desc: 图书
  */
 public class Book implements Serializable {
     /** ID*/
@@ -18,7 +20,7 @@ public class Book implements Serializable {
     private Long author;
 
     /** 价格*/
-    private BigDecimal price;
+    private Double price;
 
     /** 状态[0:下架 ,1:上架]*/
     private Integer status;
@@ -55,11 +57,11 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

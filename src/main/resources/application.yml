@@ -1,10 +1,23 @@
 
-#��������Դ
+#s数据源配置
 spring:
   datasource:
-     url: jdbc:mysql://127.0.0.1:3306/book?useUnicode=true&characterEncoding=utf8
+     url: jdbc:mysql://127.0.0.1:3306/book?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
      username: root
      password: root
      driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8111
+
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.langlang.book.model.entity  # 注意：对应实体类的路径
+
+#mybatis 分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count==countSql
+  page-size-zero: true

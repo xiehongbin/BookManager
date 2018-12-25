@@ -1,10 +1,14 @@
 package com.langlang.book.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
+
 /**
- * @author xiehongbin
- * @Date 2018/12/20
+ * @Author: xiehongbin
+ * @Date: 2018/12/25
+ * @Desc: 用户
  */
 public class User implements Serializable {
     /** ID*/
@@ -24,6 +28,9 @@ public class User implements Serializable {
 
     /** 修改时间*/
     private Date gmtModify;
+
+    /** 状态[0:启用 , 1:禁用]*/
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +66,7 @@ public class User implements Serializable {
         this.password = password == null ? null : password.trim();
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getGmtCreate() {
         return gmtCreate;
     }
@@ -67,12 +75,21 @@ public class User implements Serializable {
         this.gmtCreate = gmtCreate;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getGmtModify() {
         return gmtModify;
     }
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
@@ -87,6 +104,7 @@ public class User implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModify=").append(gmtModify);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

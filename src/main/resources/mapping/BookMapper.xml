@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.langlang.book.mapper.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.langlang.book.model.entity.Book" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.langlang.book.model.entity.Book" >
+    insert into bk_book (id, name, author, 
+      price, status, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=BIGINT}, 
+      #{price,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="update" parameterType="com.langlang.book.model.entity.Book">
+     update bk_book set name = #{name}, author = #{author}, price = #{price}, status = #{status},
+      gmt_create = #{gmtCreate}, gmt_modify = #{gmtModify} where id = #{id}
+  </update>
+
+  <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+      select * from bk_book where id = #{id}
+  </select>
+
+  <select id="queryBook" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select * from bk_book
+        <where>
+          <if test="_parameter != null and _parameter != ''">
+            name like '%${_parameter}%'
+          </if>
+        </where>
+          order by gmt_create DESC
+  </select>
+
+  <select id="findTotalCount" resultType="java.lang.Integer">
+    select count(1) from bk_book
+  </select>
+
+  <delete id="remove" parameterType="java.lang.Long" >
+    delete from bk_book where id = #{id}
+  </delete>
+
+</mapper>
