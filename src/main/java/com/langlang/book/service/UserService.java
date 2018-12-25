@@ -21,4 +21,12 @@ public interface UserService {
      * @return
      */
     List<User> listAllUser();
+
+    /**
+     * 用户登录
+     * @param email 邮箱
+     * @param password 密码
+     * @return
+     */
+    User login(String email, String password);
 }

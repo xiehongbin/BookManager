@@ -14,7 +14,7 @@ public class RandomUtil {
      */
     private static final int NUM = 3;
 
-    private static Long generatorID(){
+    public static Long generatorID(){
         // 当前时间搓
         Long currentTimeMillis = System.currentTimeMillis();
         StringBuilder sb = new StringBuilder();

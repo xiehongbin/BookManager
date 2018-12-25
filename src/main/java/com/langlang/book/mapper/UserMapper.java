@@ -24,4 +24,11 @@ public interface UserMapper {
      * @return
      */
     List<User> listAllUser();
+
+    /**
+     * 根据唯一值查询
+     * @param email
+     * @return
+     */
+    User getUnion(String email);
 }
