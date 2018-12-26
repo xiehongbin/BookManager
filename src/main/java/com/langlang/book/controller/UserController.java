@@ -7,11 +7,17 @@ import com.langlang.book.model.entity.User;
 import com.langlang.book.service.UserService;
 import com.langlang.book.util.RandomUtil;
 import com.langlang.book.util.ResultData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -25,12 +31,14 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/user")
+@Api("用户模块")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/register")
+    @ApiOperation("用户注册")
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Map register(@RequestBody JSONObject params){
         String name = params.getString("name");
         String password = params.getString("password");
@@ -60,12 +68,18 @@ public class UserController {
         return ResultData.success(true, "注册成功");
     }
 
+
     @RequestMapping("/query_all_user")
     public List<User> queryAllUser(){
         return userService.listAllUser();
     }
 
-    @RequestMapping("/login")
+    @ApiOperation("用户登录")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name="email", value = "邮箱", required = true, dataType = "String"),
+//            @ApiImplicitParam(name="password", value = "密码", required = true, dataType = "String")
+//    })
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map login(@RequestBody JSONObject params){
         String password = params.getString("password");
         String email = params.getString("email");

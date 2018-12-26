@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @Author: xiehongbin
- * @Date: 2018/12/24 0024 15:50
+ * @Date: 2018/12/24
  */
 @Service
 public class BookServiceImpl implements BookService{
