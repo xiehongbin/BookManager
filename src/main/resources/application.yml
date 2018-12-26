@@ -30,4 +30,8 @@ pagehelper:
       port: 6379 # Redis服务器连接端口
       password: 123456 # Redis服务器连接密码（默认为空）
       timeout: 0 # 连接超时时间（毫秒）
+# 解决资源映射问题
+    mvc:
+      static-path-pattern: /static/**
+
 
