@@ -284,7 +284,7 @@ java的JDK源码或者Spring源码的注释习惯。
 
 这些类封装了一些基本的常用的方法，供我们调用。
 
-我们还封装了一个自己的Exception类：LoginRegisterException.java。
+我们还封装了一个自己的Exception类：LoginRegisterExcepti  on.java。
 
 HostHolder是一个重要的类，用来包装ConcurrentUtils.java的方法，并交给Spring容器去管理，
 使得我们可以在任何时候都能找当前的User，只要用户登录了，我们就将User信息设置到HostHolder

@@ -5,22 +5,31 @@ import com.alibaba.fastjson.JSONObject;
 import com.langlang.book.model.entity.Book;
 import com.langlang.book.model.entity.RequestContext;
 import com.langlang.book.service.BookService;
+import com.langlang.book.util.ExcelUtil;
 import com.langlang.book.util.PageBean;
 import com.langlang.book.util.ResultData;
+import com.langlang.book.util.TransitionUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.*;
 
 /**
  * @Author: xiehongbin
  * @Date: 2018/12/24
  */
+@Api("图书管理")
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -28,7 +37,8 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping("/save_book")
+    @ApiOperation("添加图书")
+    @RequestMapping(value = "/save_book", method = RequestMethod.POST)
     public Map saveBook(@RequestBody Book book){
         if (StringUtils.isEmpty(book.getName())){
             throw new RuntimeException("图书名不能为空!");
@@ -96,4 +106,36 @@ public class BookController {
         return ResultData.success(true,"修改成功");
     }
 
+    @RequestMapping("/export")
+    public void export(HttpServletResponse response) throws IOException {
+        OutputStream out = null;
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=book.xls");
+        List<Book> data = bookService.queryBook(1, 999999999, null).getData();
+        String [] headers = {"ID", "图书名", "创作者", "价格", "状态", "创建时间"};
+        String [] keys = {"id", "name", "author", "price", "status", "gmtCreate"};
+        Collection<Map<String, Object>> result = new LinkedList<>();
+        for (Book book : data) {
+            Map<String, Object> map = TransitionUtil.EntityToMap(book);
+            result.add(map);
+        }
+        HSSFWorkbook workBook = ExcelUtil.exportMapExcel("图书列表", headers, keys, result, out);
+        try {
+            out = response.getOutputStream();
+            if (out != null) {
+                workBook.write(out);
+            }
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
