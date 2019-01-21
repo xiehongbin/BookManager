@@ -32,7 +32,7 @@ public class DemoController {
 
     @RequestMapping("testQrCode")
     public void testQrCode() throws Exception {
-        String text = "https://blog.csdn.net/ianly123";
+        String text = "https://github.com/xiehongbin/BookManager/blob/master/src/main/resources/static/image/u%3D3147645381%2C534513630%26fm%3D27%26gp%3D0.jpg";
         QrCodeImageUtils.encode(text, "G:\\60195609.jpeg","G:\\",true);
     }
 }
