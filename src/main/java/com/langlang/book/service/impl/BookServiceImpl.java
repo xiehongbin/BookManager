@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService{
     @Override
     public void saveBook(Long userId, Book book) {
         if (StringUtils.isEmpty(userId)){
-            throw new RuntimeException("用户ID不能为空");
+            throw new RuntimeException("用户不能为ID空");
         }
         // 书名重复校验
         List<Book> books = bookMapper.queryBook(book.getName());
@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService{
         if (StringUtils.isEmpty(book.getStatus())){
             book.setStatus(1);
         }
-        book.setId(userId);
+        book.setAuthor(userId);
         book.setGmtCreate(new Timestamp(System.currentTimeMillis()));
         bookMapper.insert(book);
     }

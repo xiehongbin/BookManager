@@ -1,5 +1,7 @@
 package com.langlang.book.controller;
 
+import com.langlang.book.util.QrCode64Utils;
+import com.langlang.book.util.QrCodeImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +30,9 @@ public class DemoController {
         return data.toString();
     }
 
+    @RequestMapping("testQrCode")
+    public void testQrCode() throws Exception {
+        String text = "https://blog.csdn.net/ianly123";
+        QrCodeImageUtils.encode(text, "G:\\60195609.jpeg","G:\\",true);
+    }
 }
